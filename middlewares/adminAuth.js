@@ -2,23 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const adminAuth = (req, res, next) => {
   try {
-    const authHeader = req.headers.authorization;
-
-    if (!authHeader) {
-      return res.status(401).json({
-        success: false,
-        message: "توکن ارسال نشده است",
-      });
-    }
-
-    if (!authHeader.startsWith("Bearer ")) {
-      return res.status(401).json({
-        success: false,
-        message: "فرمت توکن صحیح نیست",
-      });
-    }
-
-    const token = authHeader.split(" ")[1];
+    const token = req.cookies.adminToken;
 
     if (!token) {
       return res.status(401).json({

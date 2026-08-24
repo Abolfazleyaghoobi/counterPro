@@ -22,10 +22,16 @@ const loginAdmin = async (req, res) => {
 
     const token = generateAdminToken(admin);
 
+    res.cookie("adminToken", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
     return res.status(200).json({
       success: true,
       message: "ورود موفقیت‌آمیز بود",
-      token,
       admin: {
         id: admin._id,
         name: admin.name,
