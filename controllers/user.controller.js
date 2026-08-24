@@ -12,7 +12,8 @@ const addUserController = async (req, res) => {
       res.status(400).json({ message: "تو قبلا ثبت نام کردی" });
       return;
     }
-    if (addUserService) {
+    console.log('isSignup', isSignup)
+    if (!isSignup) {
       const addUserService = await addUser(req.body);
 
       res.status(200).json({ message: "عملیات ثبت نام موفقیت امیز بوده" });
