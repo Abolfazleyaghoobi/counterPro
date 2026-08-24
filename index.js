@@ -8,10 +8,11 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const app = express();
 const userRoutes= require("./routes/user.routes");
+const adminRoutes = require("./routes/admin.route");
 app.use(express.json());
 app.use(cookieParser());
 app.use(userRoutes)
-
+app.use(adminRoutes)
 
 
 app.listen(3000, () => {
