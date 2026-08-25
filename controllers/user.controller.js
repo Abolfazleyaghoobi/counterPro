@@ -3,6 +3,7 @@ const {
   findUserByNationalNumber,
   findUserByIsActive,
   findUserByIsNotActive,
+  getAllUser,
 } = require("../services/user.service");
 
 const addUserController = async (req, res) => {
