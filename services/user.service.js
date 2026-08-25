@@ -82,10 +82,25 @@ const activeUser = async (nationalNumber) => {
 };
 
 
+
+const getAllUser = async () => {
+  try {
+    const user = await userModel.find({
+   
+      isActive: true,
+    });
+
+    return user;
+  } catch (error) {
+    console.error("Error finding active user:", error);
+    throw error;
+  }
+};
 module.exports = {
   addUser,
   findUserByNationalNumber,
   findUserByIsActive,
   findUserByIsNotActive,
-  activeUser
+  activeUser,
+  getAllUser
 };

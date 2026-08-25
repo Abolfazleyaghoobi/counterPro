@@ -42,8 +42,18 @@ const getAllUserNotActive= async (req,res)=>{
 }
 
 
+
+
+const getdAllUserForAdmin= async (req,res)=>{
+    const activeUser= await getAllUser();
+    res.status(200).json({message:activeUser})
+
+}
+
+
 module.exports = {
     addUserController,
     getAllUserActive,
-    getAllUserNotActive
+    getAllUserNotActive,
+    getdAllUserForAdmin
 };
