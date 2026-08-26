@@ -1,5 +1,5 @@
 const { activeUser } = require("../services/user.service.js");
-import { rejectUser } from "../services/user.service.js";
+const { rejectUser } =require("../services/user.service");
 
 const {
   findAdminByEmail,
