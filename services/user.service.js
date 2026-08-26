@@ -81,8 +81,19 @@ const activeUser = async (nationalNumber) => {
   }
 };
 
+const rejectUser = async (nationalNumber) => {
+  try {
+    const user = await userModel.findOneAndDelete({
+      nationalNumber,
+      isActive: false,
+    });
 
-
+    return user;
+  } catch (error) {
+    console.error("Error rejecting user:", error);
+    throw error;
+  }
+};
 const getAllUser = async () => {
   try {
     const user = await userModel.find({
@@ -102,5 +113,6 @@ module.exports = {
   findUserByIsActive,
   findUserByIsNotActive,
   activeUser,
-  getAllUser
+  getAllUser,
+  rejectUser
 };

@@ -1,4 +1,6 @@
 const { activeUser } = require("../services/user.service");
+import { rejectUser } from "../services/user.service";
+
 const {
   findAdminByEmail,
 } = require("../services/admin.service");
@@ -54,12 +56,6 @@ const loginAdmin = async (req, res) => {
 
 
 
-
-
-
-
-
-
 const activateUser = async (req, res) => {
   try {
     const { nationalNumber } = req.body;
@@ -91,7 +87,45 @@ const activateUser = async (req, res) => {
 
 
 
+
+
+
+export const rejectUserController = async (req, res) => {
+  try {
+    const { nationalNumber } = req.body;
+
+    if (!nationalNumber) {
+      return res.status(400).json({
+        success: false,
+        message: "کد ملی ارسال نشده است",
+      });
+    }
+
+    const user = await rejectUser(nationalNumber);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "کاربر پیدا نشد یا قبلاً حذف شده است",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "ثبت‌نام کاربر رد شد و اطلاعات او حذف شد",
+    });
+
+  } catch (error) {
+    console.error("Reject user controller error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "خطایی در رد کردن کاربر رخ داد",
+    });
+  }
+};
 module.exports = {
   loginAdmin,
-  activateUser
+  activateUser,
+  rejectUserController
 };
