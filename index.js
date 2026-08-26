@@ -12,7 +12,15 @@ const adminRoutes = require("./routes/admin.route");
 const cors = require("cors")
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors())
+
+
+app.use(cors({
+  origin: 'https://counter-pro-xi.vercel.app', // ← آدرس فرانت‌اند شما
+  credentials: true, // ← اجازه ارسال کوکی
+  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+  
+}));
+
 app.use(userRoutes)
 app.use(adminRoutes)
 
