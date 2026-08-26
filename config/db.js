@@ -2,7 +2,7 @@ const mongoos = require("mongoose");
 
 const connectDB = async () => {
     try {
-        await mongoos.connect(MONGODB_URI="mongodb+srv://Vercel-Admin-aliooo:Kh8Pxrw6wJvos2kH@aliooo.kwxeidk.mongodb.net/?retryWrites=true&w=majority");
+        await mongoos.connect("mongodb+srv://Vercel-Admin-atlas-cordovan-drum:INHiDZMl6zgJKiz0@atlas-cordovan-drum.s0z6rwl.mongodb.net/?retryWrites=true&w=majority");
         
         console.log("MongoDB connected successfully");
     } catch (error) {
