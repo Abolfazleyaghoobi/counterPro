@@ -1,19 +1,28 @@
-const { activeUser } = require("../services/user.service.js");
-const { rejectUser } =require("../services/user.service");
+const {  rejectUserService, activateUser, getUserByNationalNumber, createUser } = require("../services/user.service.js");
+// const { rejectUser } =require("../services/user.service");
 
 const {
-  findAdminByEmail,
+  
+  getAdminByEmail,
 } = require("../services/admin.service");
 
 const {
   generateAdminToken,
 } = require("../services/adminToken");
-0
+
+
 const loginAdmin = async (req, res) => {
   try {
     const { email } = req.body;
 
-    const admin = await findAdminByEmail(email);
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "ایمیل الزامی است",
+      });
+    }
+
+    const admin = await getAdminByEmail(email);
 
     if (!admin) {
       return res.status(404).json({
@@ -35,13 +44,12 @@ const loginAdmin = async (req, res) => {
       success: true,
       message: "ورود موفقیت‌آمیز بود",
       admin: {
-        id: admin._id,
+        id: admin.id,
         name: admin.name,
         email: admin.email,
         role: admin.role,
       },
     });
-
   } catch (error) {
     console.error("Login admin error:", error);
 
@@ -56,11 +64,20 @@ const loginAdmin = async (req, res) => {
 
 
 
-const activateUser = async (req, res) => {
+
+
+const activateUserController = async (req, res) => {
   try {
     const { nationalNumber } = req.body;
 
-    const user = await activeUser(nationalNumber);
+    if (!nationalNumber) {
+      return res.status(400).json({
+        success: false,
+        message: "کد ملی ارسال نشده است",
+      });
+    }
+
+    const user = await activateUser(nationalNumber);
 
     if (!user) {
       return res.status(404).json({
@@ -74,7 +91,6 @@ const activateUser = async (req, res) => {
       message: "کاربر با موفقیت فعال شد",
       user,
     });
-
   } catch (error) {
     console.error("Activate user error:", error);
 
@@ -90,7 +106,8 @@ const activateUser = async (req, res) => {
 
 
 
-export const rejectUserController = async (req, res) => {
+
+const rejectUserController = async (req, res) => {
   try {
     const { nationalNumber } = req.body;
 
@@ -101,7 +118,7 @@ export const rejectUserController = async (req, res) => {
       });
     }
 
-    const user = await rejectUser(nationalNumber);
+    const user = await rejectUserService(nationalNumber);
 
     if (!user) {
       return res.status(404).json({
@@ -114,7 +131,6 @@ export const rejectUserController = async (req, res) => {
       success: true,
       message: "ثبت‌نام کاربر رد شد و اطلاعات او حذف شد",
     });
-
   } catch (error) {
     console.error("Reject user controller error:", error);
 
@@ -124,8 +140,43 @@ export const rejectUserController = async (req, res) => {
     });
   }
 };
+
+
+
+
+
+
+const addUserHandController = async (req, res) => {
+  try {
+    const user = await getUserByNationalNumber(
+      req.body.nationalNumber
+    );
+
+    if (user) {
+      return res.status(400).json({
+        message: "کاربر قبلا ثبت نام کرده ",
+      });
+    }
+
+    const newUser = await createUser(req.body);
+
+    return res.status(201).json({
+      message: "عملیات ثبت نام موفقیت آمیز بوده",
+      user: newUser,
+    });
+
+  } catch (error) {
+    console.error("Add user controller error:", error);
+
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   loginAdmin,
-  activateUser,
-  rejectUserController
+  activateUserController,
+  rejectUserController,
+  addUserHandController
 };

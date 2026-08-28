@@ -1,8 +1,7 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
-const connectDB = require("./config/db");
-connectDB();
+
 
 const express = require("express");
 const cookieParser = require("cookie-parser");
@@ -14,17 +13,12 @@ app.use(express.json());
 app.use(cookieParser());
 
 
-app.use(cors({
-  origin: 'https://counter-pro-xi.vercel.app', // ← آدرس فرانت‌اند شما
-  credentials: true, // ← اجازه ارسال کوکی
-  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-  
-}));
-
+app.use(cors());
+const { connectDatabase } = require('./config/db');
 app.use(userRoutes)
 app.use(adminRoutes)
 
-
+ connectDatabase();
 app.listen(3000, () => {
     console.log("server is running on port 3000");
 })

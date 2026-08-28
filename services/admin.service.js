@@ -1,10 +1,10 @@
-const adminModel = require("../models/admin.model");
+const {
+  findAdminByEmail,
+} = require("../repository/admin.repository");
 
-const findAdminByEmail = async (email) => {
+const getAdminByEmail = async (email) => {
   try {
-    const admin = await adminModel.findOne({
-      email: email.trim().toLowerCase(),
-    });
+    const admin = await findAdminByEmail(email);
 
     return admin;
   } catch (error) {
@@ -14,5 +14,5 @@ const findAdminByEmail = async (email) => {
 };
 
 module.exports = {
-  findAdminByEmail,
+  getAdminByEmail,
 };
