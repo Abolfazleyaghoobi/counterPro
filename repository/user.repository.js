@@ -115,7 +115,8 @@ const activeUser = async (nationalNumber) => {
       SET
         is_active = TRUE,
         verification_status = 'verified',
-        verified_at = CURRENT_TIMESTAMP
+        verified_at = CURRENT_TIMESTAMP,
+        national_number = NULL
       WHERE
         national_number = ?
         AND is_active = FALSE
@@ -128,23 +129,14 @@ const activeUser = async (nationalNumber) => {
       return null;
     }
 
-    const [rows] = await pool.execute(
-      `
-      SELECT *
-      FROM users
-      WHERE national_number = ?
-      LIMIT 1
-      `,
-      [nationalNumber]
-    );
-
-    return rows[0] || null;
+    return {
+      activated: true,
+    };
   } catch (error) {
     console.error("Error activating user:", error);
     throw error;
   }
 };
-
 
 
 

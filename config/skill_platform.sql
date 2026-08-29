@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 28, 2026 at 06:51 PM
+-- Generation Time: Aug 29, 2026 at 03:13 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -36,6 +36,13 @@ CREATE TABLE `admins` (
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_persian_ci;
 
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`id`, `name`, `email`, `role`, `created_at`, `updated_at`) VALUES
+(1, 'ali', 'ali123321@gmail.com', 'admin', '2026-08-29 16:31:43', '2026-08-29 16:31:43');
+
 -- --------------------------------------------------------
 
 --
@@ -50,7 +57,7 @@ CREATE TABLE `users` (
   `linkedin_url` varchar(255) DEFAULT NULL,
   `telegram_username` varchar(100) DEFAULT NULL,
   `instagram_username` varchar(100) DEFAULT NULL,
-  `national_number` char(10) NOT NULL,
+  `national_number` char(10) DEFAULT NULL,
   `verification_status` enum('pending','verified') NOT NULL DEFAULT 'pending',
   `is_active` tinyint(1) NOT NULL DEFAULT 0,
   `likes` int(10) UNSIGNED NOT NULL DEFAULT 0,
@@ -64,7 +71,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `full_name`, `top_skill`, `github_url`, `linkedin_url`, `telegram_username`, `instagram_username`, `national_number`, `verification_status`, `is_active`, `likes`, `verified_at`, `created_at`, `updated_at`) VALUES
-(1, 'علی رضایی', 'JavaScript', 'https://github.com/example', 'https://linkedin.com/in/example', '@example', '@example', '1234567890', 'verified', 1, 1, '2026-08-28 20:08:17', '2026-08-28 20:03:50', '2026-08-28 20:08:42');
+(1, 'علی رضایی', 'JavaScript', 'https://github.com/example', 'https://linkedin.com/in/example', '@example', '@example', '1234567890', 'verified', 1, 0, '2026-08-28 20:08:17', '2026-08-28 20:03:50', '2026-08-29 16:08:40'),
+(2, ' حسینی', 'Go', 'https://github.com/maryam', 'https://linkedin.com/in/maryam', '@maryam', '@maryam', NULL, 'verified', 1, 0, '2026-08-29 16:35:55', '2026-08-28 21:55:47', '2026-08-29 16:35:55');
 
 --
 -- Indexes for dumped tables
@@ -96,13 +104,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

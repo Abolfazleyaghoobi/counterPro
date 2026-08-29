@@ -7,7 +7,7 @@ const { addUserController, getAllUserActive, getAllUserNotActive, getdAllUserFul
 const router=express.Router();
 router.post("/create",validateUser,addUserController);
 router.get("/usersactive",getAllUserActive);
-router.get("/usersnotactive",getAllUserNotActive);
+
 
 router.get("/getalluserforuser", getdAllUserFullInfoU);
 router.post("/like", addLikeController);

@@ -9,14 +9,14 @@ const {
 } = require("../controllers/admin.controller");
 
 const { adminAuth } = require("../middlewares/adminAuth");
-const {  getdAllUserFullInfo } = require("../controllers/user.controller");
+const {  getdAllUserFullInfo, getAllUserNotActive } = require("../controllers/user.controller");
 
 const router = express.Router();
 
 router.post("/login", loginAdmin);
 router.post("/addforadmin",adminAuth,addUserHandController)
 router.patch("/users/activate", adminAuth, activateUserController);
-
+router.get("/usersnotactive",adminAuth,getAllUserNotActive);
 router.get("/alluserinfo", adminAuth,getdAllUserFullInfo);
 
 router.delete("/users/reject", adminAuth, rejectUserController);
