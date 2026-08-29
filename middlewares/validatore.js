@@ -48,7 +48,7 @@ const validateUser = (req, res, next) => {
 
   if (
     !validator.isLength(topSkill.trim(), {
-      min: 2,
+      min: 1,
       max: 100,
     })
   ) {
