@@ -1,5 +1,5 @@
 const userModel = require("../models/user.model");
-const { findUserByNationalNumber,addUser, findUserByIsNotActive, findUserByIsActive, activeUser, rejectUser,getAllUser, addLikeToUser } = require("../repository/user.repository");
+const { findUserByNationalNumber,addUser, findUserByIsNotActive, findUserByIsActive, activeUser, rejectUser,getAllUser, addLikeToUser, getAllUserForUser,endLikeToUser } = require("../repository/user.repository");
 
 
 const createUser = async (user) => {
@@ -82,6 +82,16 @@ const getAllActiveUsers = async () => {
     throw error;
   }
 };
+const getAllUserForUserService=async()=>{
+  try {
+    const users = await getAllUserForUser();
+
+    return users;
+  } catch (error) {
+    console.error("Error finding active users:", error);
+    throw error;
+  }
+}
 
 
 
@@ -96,6 +106,17 @@ const addLike = async (userId) => {
     throw error;
   }
 };
+const endLike = async (userId) => {
+  try {
+    const user = await endLikeToUser(userId);
+
+    return user;
+  } catch (error) {
+    console.error("Error adding like to user:", error);
+    throw error;
+  }
+};
+
 
 
 module.exports = {
@@ -106,7 +127,9 @@ module.exports = {
   activateUser,
   rejectUserService,
     addLike,
-  getAllActiveUsers
+  getAllActiveUsers,
+  getAllUserForUserService,
+  endLike
   
 };
 

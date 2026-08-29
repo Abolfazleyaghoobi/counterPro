@@ -195,7 +195,38 @@ const getAllUser = async () => {
   }
 };
 
+const getAllUserForUser=async()=>{
+  
+  try {
+    const [rows] = await pool.execute(
+      `
+      SELECT
+        id,
+        full_name,
+        top_skill,
+        github_url,
+        linkedin_url,
+        telegram_username,
+        instagram_username,
+        verification_status,
+        is_active,
+        likes,
+        verified_at,
+        created_at,
+        updated_at
+      FROM users
+      WHERE is_active = TRUE
+      ORDER BY created_at DESC
+      `
+    );
 
+    return rows;
+  } catch (error) {
+    console.error("Error finding active users:", error);
+    throw error;
+  }
+
+}
 
 
 
@@ -205,6 +236,38 @@ const addLikeToUser = async (userId) => {
       `
       UPDATE users
       SET likes = likes + 1
+      WHERE id = ?
+        AND is_active = TRUE
+      `,
+      [userId]
+    );
+
+    if (result.affectedRows === 0) {
+      return null;
+    }
+
+    const [rows] = await pool.execute(
+      `
+      SELECT id, full_name, top_skill, likes
+      FROM users
+      WHERE id = ?
+      LIMIT 1
+      `,
+      [userId]
+    );
+
+    return rows[0] || null;
+  } catch (error) {
+    console.error("Error adding like:", error);
+    throw error;
+  }
+};
+const endLikeToUser = async (userId) => {
+  try {
+    const [result] = await pool.execute(
+      `
+      UPDATE users
+      SET likes = likes - 1
       WHERE id = ?
         AND is_active = TRUE
       `,
@@ -241,5 +304,7 @@ module.exports = {
   activeUser,
   rejectUser,
   getAllUser,
-  addLikeToUser
+  addLikeToUser,
+  getAllUserForUser,
+  endLikeToUser
 };

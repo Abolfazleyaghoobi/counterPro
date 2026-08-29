@@ -17,7 +17,7 @@ router.post("/login", loginAdmin);
 router.post("/addforadmin",adminAuth,addUserHandController)
 router.patch("/users/activate", adminAuth, activateUserController);
 
-router.get("/alluserinfo", getdAllUserFullInfo);
+router.get("/alluserinfo", adminAuth,getdAllUserFullInfo);
 
 router.delete("/users/reject", adminAuth, rejectUserController);
 module.exports = router;
